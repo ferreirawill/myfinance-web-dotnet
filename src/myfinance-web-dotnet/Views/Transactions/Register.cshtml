@@ -1,0 +1,48 @@
+@model TransactionModel
+
+@{
+    ViewData["Title"] = "Cadastro de conta";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="Transaction" asp-action="Register" method="post">
+    <div class="container">
+        <div class="mb-3">
+            <label class="form-label">Data</label>
+            <input type="hidden" id="textId" class="form-control" asp-for="Id"/>
+            <input type="date" id="textDate" class="form-control" asp-for="Date"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Valor</label>
+            <input type="number" id="textValue" class="form-control" asp-for="Value" step="0.01"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Plano Conta</label>
+            @Html.DropDownListFor(m => m.PlanoContaId, Model.PlanoConta, new { @class="form-select"}) @*TODO: NOME DA VÁRIAVEL DEVE SER ALTERADA AQUI*@
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Histórico</label>
+            <input type="text" id="textDescricao" class="form-control" asp-for="Historic"/>
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-secondary" onclick="voltar()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" >Registrar</button>
+        </div>
+    </div>
+</form>
+<hr/>
+
+
+
+
+<script>
+    @* TODO: ALTERAR NOME DA FUNÇÃO PARA INGLÊS*@
+    function voltar(){ 
+        window.location.href = "../PlanoConta"
+    }
+</script>

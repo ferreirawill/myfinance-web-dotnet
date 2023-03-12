@@ -1,0 +1,35 @@
+@model PlanoContaModel
+
+@{
+    ViewData["Title"] = "Cadastro de plano de contas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-controller="PlanoConta" asp-action="Cadastro" method="post">
+    <div class="container">
+        <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <input type="hidden" id="textId" class="form-control" asp-for="Id"/>
+            <input type="text" id="textDescricao" class="form-control" asp-for="Description"/>
+        </div>
+        <div class="mb-3">
+            <label >@Html.RadioButtonFor(m => m.Type, "D") Despesa</label>
+            <label >@Html.RadioButtonFor(m => m.Type, "R") Receita</label>
+        </div>
+        <div class="mb-3">
+            <button type="button" class="btn btn-secondary" onclick="voltar()">Cancelar</button>
+            <button type="submit" class="btn btn-primary" >Registrar</button>
+        </div>
+    </div>
+</form>
+<hr/>
+
+
+
+
+<script>
+    function voltar(){
+        window.location.href = "../PlanoConta"
+    }
+</script>

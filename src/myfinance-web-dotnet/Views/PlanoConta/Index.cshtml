@@ -1,0 +1,36 @@
+@{
+    ViewData["Title"] = "Plano de Contas";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<button type="button" class="btn btn-primary btn-lg" onclick="registrar()">Criar Item de Plano de Conta</button>
+<hr/>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Descrição</th>
+      <th scope="col">Tipo</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>1</td>
+      <td>Jogo do bicho</td>
+      <td>D</td>
+      <td><button type="button" class="btn btn-outline-info">Editar</button></td>
+      <td><button type="button" class="btn btn-danger">Excluir</button></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<script>
+    function registrar(){
+        window.location.href = "/PlanoConta/Cadastro"
+    }
+</script>
