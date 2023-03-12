@@ -11,11 +11,11 @@
         <div class="mb-3">
             <label class="form-label">Descrição</label>
             <input type="hidden" id="textId" class="form-control" asp-for="Id"/>
-            <input type="text" id="textDescricao" class="form-control" asp-for="Description"/>
+            <input type="text" id="textDescricao" class="form-control" asp-for="Descricao"/>
         </div>
         <div class="mb-3">
-            <label >@Html.RadioButtonFor(m => m.Type, "D") Despesa</label>
-            <label >@Html.RadioButtonFor(m => m.Type, "R") Receita</label>
+            <label >@Html.RadioButtonFor(m => m.Tipo, "D") Despesa</label>
+            <label >@Html.RadioButtonFor(m => m.Tipo, "R") Receita</label>
         </div>
         <div class="mb-3">
             <button type="button" class="btn btn-secondary" onclick="voltar()">Cancelar</button>
@@ -30,6 +30,6 @@
 
 <script>
     function voltar(){
-        window.location.href = "../PlanoConta"
+        window.location.href = "../"
     }
 </script>

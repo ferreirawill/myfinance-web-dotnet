@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace myfinance_web_dotnet.Views.Transactions
+namespace myfinance_web_dotnet.Views.Transacao
 {
     public class Index : PageModel
     {

@@ -4,7 +4,7 @@
 
 <h1>@ViewData["Title"]</h1>
 
-<button type="button" class="btn btn-primary btn-lg" onclick="registrar()">Criar Item de Plano de Conta</button>
+<button type="button" class="btn btn-primary btn-lg" onclick="create()">Criar Item de Plano de Conta</button>
 <hr/>
 <table class="table">
   <thead>
@@ -16,21 +16,36 @@
       <th scope="col"></th>
     </tr>
   </thead>
+
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>1</td>
-      <td>Jogo do bicho</td>
-      <td>D</td>
-      <td><button type="button" class="btn btn-outline-info">Editar</button></td>
-      <td><button type="button" class="btn btn-danger">Excluir</button></td>
-    </tr>
+    @{
+      foreach(var item in  (List<PlanoContaModel>)ViewBag.ListaPlanoConta)
+      {
+      <tr>
+        <td>@item.Id</td>
+        <td>@item.Descricao</td>
+        <td>@item.Tipo</td>
+        <td><button type="button" class="btn btn-outline-info" onclick="edit(@item.Id.ToString())">Editar</button></td>
+        <td><button type="button" class="btn btn-danger" onclick="remove(@item.Id.ToString())">Excluir</button></td>
+      </tr>
+      }
+    }
+
   </tbody>
 </table>
 
 
 <script>
-    function registrar(){
+    function create(){
         window.location.href = "/PlanoConta/Cadastro"
     }
+
+    function edit(id){
+        window.location.href = "/PlanoConta/Cadastro/" + id
+
+    }
+    function remove(id){
+        window.location.href = "/PlanoConta/Excluir/" + id
+    }
+
 </script>

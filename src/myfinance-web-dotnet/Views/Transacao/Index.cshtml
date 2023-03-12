@@ -1,0 +1,59 @@
+@model TransacaoModel
+
+@{
+    ViewData["Title"] = "Transações Financeiras";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<button type="button" class="btn btn-primary btn-lg" onclick="registrar()">Registrar Transação</button>
+<hr/>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      
+      <th scope="col">Data</th>
+      <th scope="col">Histórico</th>
+      <th scope="col">Valor</th>
+      <th scope="col">Tipo de operação</th>
+      <th scope="col">Plano Conta</th>
+
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    @{
+      foreach(var item in  (List<TransacaoModel>)ViewBag.Transacoes)
+      {
+      <tr>
+        <td>@item.Id</td>
+        <td>@item.Data.Date</td>
+        <td>@item.Historico</td>
+        <td>@item.Valor</td>
+        <td>@item.ItemPlanoConta.Tipo</td>
+        <td>@item.ItemPlanoConta.Descricao</td>
+        <td><button type="button" class="btn btn-outline-info" onclick="edit(@item.Id.ToString())">Editar</button></td>
+        <td><button type="button" class="btn btn-danger" onclick="remove(@item.Id.ToString())">Excluir</button></td>
+      </tr>
+      }
+    }
+  </tbody>
+</table>
+
+
+<script>
+    function registrar(){
+        window.location.href = "/Transacao/Cadastro"
+    }
+    function edit(id){
+        window.location.href = "/Transacao/Cadastro/" + id
+
+    }
+    function remove(id){
+        window.location.href = "/Transacao/Excluir/" + id
+    }
+
+    
+</script>

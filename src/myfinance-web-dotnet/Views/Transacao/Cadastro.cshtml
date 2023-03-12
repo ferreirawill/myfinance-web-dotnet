@@ -1,32 +1,32 @@
-@model TransactionModel
+@model TransacaoModel
 
 @{
-    ViewData["Title"] = "Cadastro de conta";
+    ViewData["Title"] = "Registro de Transação Financeira";
 }
 
 <h1>@ViewData["Title"]</h1>
 
-<form asp-controller="Transaction" asp-action="Register" method="post">
+<form asp-controller="Transacao" asp-action="Cadastro" method="post">
     <div class="container">
         <div class="mb-3">
             <label class="form-label">Data</label>
             <input type="hidden" id="textId" class="form-control" asp-for="Id"/>
-            <input type="date" id="textDate" class="form-control" asp-for="Date"/>
+            <input type="date" id="textDate" class="form-control" min="2015-01-02" max="2023-12-31"asp-for="Data"/>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Valor</label>
-            <input type="number" id="textValue" class="form-control" asp-for="Value" step="0.01"/>
+            <input type="text" id="textValue" class="form-control" asp-for="Valor" step="0.01"/>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Plano Conta</label>
-            @Html.DropDownListFor(m => m.PlanoContaId, Model.PlanoConta, new { @class="form-select"}) @*TODO: NOME DA VÁRIAVEL DEVE SER ALTERADA AQUI*@
+            @Html.DropDownListFor(m => m.PlanoContaId, Model.PlanoContas, new { @class="form-select"})
         </div>
         
         <div class="mb-3">
             <label class="form-label">Histórico</label>
-            <input type="text" id="textDescricao" class="form-control" asp-for="Historic"/>
+            <input type="text" id="textDescricao" class="form-control" asp-for="Historico"/>
         </div>
 
         <div class="mb-3">
@@ -41,8 +41,9 @@
 
 
 <script>
-    @* TODO: ALTERAR NOME DA FUNÇÃO PARA INGLÊS*@
+
+
     function voltar(){ 
-        window.location.href = "../PlanoConta"
+        window.location.href = "../"
     }
 </script>
