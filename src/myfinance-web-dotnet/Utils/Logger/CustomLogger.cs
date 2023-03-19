@@ -15,11 +15,10 @@ namespace myfinance_web_dotnet.utils
 
         public CustomLogger(string name)
         {
-            
             this.name = name;
         }
 
-        public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default!;
+        public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
 
         public bool IsEnabled(LogLevel logLevel) => true;
 
@@ -38,17 +37,18 @@ namespace myfinance_web_dotnet.utils
            
             try
             {
-                 var b = JsonSerializer.Deserialize<CustomLoggerEntry>(formatter(state, exception));
                   Console.WriteLine(jsonLogObject);
-                  _context.Log.Add(b);
+                  _context.Log.Add(CustomLoggerEntry.DeserializeEntry(formatter(state, exception)));
                   _context.SaveChanges();
             }
             catch (System.Exception e)
             {
-                Console.WriteLine(e);
-                Console.WriteLine(jsonLogObject);
+                // Don't care
             }
+        }
 
+        public void Dispose(){
+            _context.Dispose();
         }
     }
 }

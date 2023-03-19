@@ -4,6 +4,9 @@
 
 <h1>@ViewData["Title"]</h1>
 
+
+
+
 <button type="button" class="btn btn-primary btn-lg" onclick="create()">Criar Item de Plano de Conta</button>
 <hr/>
 <table class="table">
@@ -36,6 +39,8 @@
 
 
 <script>
+
+
     function create(){
         window.location.href = "/PlanoConta/Cadastro"
     }
@@ -45,7 +50,22 @@
 
     }
     function remove(id){
-        window.location.href = "/PlanoConta/Excluir/" + id
+        Swal.fire({
+            title: 'Confirme a Exclusão',
+            text: 'Atenção',
+            icon: 'question',
+            confirmButtonText: 'Excluir',
+            confirmButtonColor: '#007BFF',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#DC3545',
+
+        }).then(result =>{
+        if (result.isConfirmed){
+              window.location.href = "/PlanoConta/Excluir/" + id
+        }
+      })
+
     }
 
 </script>

@@ -28,6 +28,10 @@ namespace myfinance_web_dotnet.Utils.Logger
             });
         }
 
+        public static CustomLoggerEntry DeserializeEntry(string customEntry){
+            return JsonSerializer.Deserialize<CustomLoggerEntry>(customEntry);
+        }
+
     }
 
 }

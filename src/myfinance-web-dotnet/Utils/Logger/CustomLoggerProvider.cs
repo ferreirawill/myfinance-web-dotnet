@@ -19,6 +19,14 @@ namespace myfinance_web_dotnet.Utils.Logger
 
         public void Dispose()
         {
+
+            foreach(var logger in _loggers){
+
+                if (logger.Value is CustomLogger){
+                    logger.Value.Dispose();
+                }
+                
+            }
             _loggers.Clear();
         }
     }

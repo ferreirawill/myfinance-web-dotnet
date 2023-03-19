@@ -52,7 +52,7 @@ namespace myfinance_web_dotnet.Controllers
         public IActionResult Cadastro(TransacaoModel transacaoModel)
         {
             _transacaoService.Salvar(transacaoModel);
-            return RedirectToAction("index");
+            return RedirectToAction("Index");
         }
         
         [HttpGet]
@@ -61,7 +61,7 @@ namespace myfinance_web_dotnet.Controllers
         {
             _transacaoService.Excluir(id);
 
-            return RedirectToAction("index");
+            return RedirectToAction("Index");
         }
 
     }

@@ -18,6 +18,8 @@ namespace myfinance_web_dotnet
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost,1433;Database=myfinance;User Id=sa;Password=Pos@123456;Encrypt=True;TrustServerCertificate=True;");
+            optionsBuilder.EnableSensitiveDataLogging(true);
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
     }
 }

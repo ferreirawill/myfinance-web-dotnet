@@ -23,6 +23,7 @@ namespace myfinance_web_dotnet.Controllers
         }
 
         [HttpGet]
+        [Route("Index")]
         public IActionResult Index()
         {
             ViewBag.ListaPlanoConta = _planoContaService.ListarRegistros();
@@ -48,15 +49,16 @@ namespace myfinance_web_dotnet.Controllers
         public IActionResult Cadastro(PlanoContaModel planoContaModel)
         {
             _planoContaService.Salvar(planoContaModel);
-            return RedirectToAction("index");
+            return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("Excluir/{id}")]
         public IActionResult Excluir(int id)
         {
             _planoContaService.Excluir(id);
-            return RedirectToAction("index");
+
+            return RedirectToAction("Index");
         }
  
 

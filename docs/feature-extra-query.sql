@@ -7,3 +7,12 @@ CREATE TABLE log(
     id_registro int not null,
     PRIMARY KEY(id)
 );
+
+
+SELECT TOP (1000) [id]
+      ,[data]
+      ,[operacao]
+      ,[observacao]
+      ,[tabela]
+      ,[id_registro]
+  FROM [myfinance].[dbo].[log] where [operacao] = 'E' and [tabela] = 'PlanoConta';
