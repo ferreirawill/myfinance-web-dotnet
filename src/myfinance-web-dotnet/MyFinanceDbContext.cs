@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using myfinance_web_dotnet.Domain.Entities;
+using myfinance_web_dotnet.Utils.Logger;
 
 namespace myfinance_web_dotnet
 {
@@ -11,6 +12,7 @@ namespace myfinance_web_dotnet
     {
         public DbSet<PlanoConta> PlanoConta { get; set; }
         public DbSet<Transacao> Transacao { get; set; }
+        public DbSet<CustomLoggerEntry> Log { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
