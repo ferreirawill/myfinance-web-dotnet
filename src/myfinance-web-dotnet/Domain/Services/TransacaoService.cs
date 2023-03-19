@@ -24,13 +24,11 @@ namespace myfinance_web_dotnet.Domain.Services
         public List<TransacaoModel> ListarRegistros()
         {
             
-            _logger.LogInformation(JsonSerializer.Serialize(new CustomLoggerEntry(){
-                IdRegistro=1,
-                Data=DateTime.Now,
-                Observacao="gravação atoa",
-                Operacao=EventType.Exclusao,
-                Tabela="Transacao"
-            }));
+            _logger.LogInformation(CustomLoggerEntry.CreateEntry(
+                                    operacao: EventConstants.Type.Alteracao,
+                                    tabela: EventConstants.Tablename.PlanoConta,
+                                    observacao: "texto qualquer", 
+                                    idRegistro: 1));
 
             var dbSet = _context.Transacao.Include(x => x.PlanoConta);
             var result = new List<TransacaoModel>();

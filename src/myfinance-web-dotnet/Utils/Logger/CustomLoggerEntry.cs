@@ -1,6 +1,7 @@
 
 
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json;
 
 namespace myfinance_web_dotnet.Utils.Logger
 {
@@ -14,6 +15,18 @@ namespace myfinance_web_dotnet.Utils.Logger
 
         [Column("id_registro")]
         public int IdRegistro {get;set;}
+
+
+
+        public static string CreateEntry(string operacao, string tabela,string observacao,int idRegistro){
+            return JsonSerializer.Serialize(new CustomLoggerEntry(){
+                IdRegistro=idRegistro,
+                Data=DateTime.Now,
+                Observacao=observacao,
+                Operacao=operacao,
+                Tabela=tabela
+            });
+        }
 
     }
 
