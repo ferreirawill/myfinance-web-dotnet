@@ -1,4 +1,4 @@
-CREATE TABLE logs(
+CREATE TABLE log(
     id int IDENTITY(1,1) not null,
     data varchar(50) not null,
     operacao char(1) not null,

@@ -1,8 +1,10 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using myfinance_web_dotnet.Domain.Entities;
 using myfinance_web_dotnet.Domain.Services.Interfaces;
 using myfinance_web_dotnet.Models;
+using myfinance_web_dotnet.Utils.Logger;
 
 namespace myfinance_web_dotnet.Domain.Services
 {
@@ -10,14 +12,26 @@ namespace myfinance_web_dotnet.Domain.Services
     {
         private readonly MyFinanceDbContext _context;
         private readonly IPlanoContaService _planoContaService;
+
+        private readonly ILogger<TransacaoService> _logger;
         
-        public TransacaoService(MyFinanceDbContext context){
+        public TransacaoService(ILogger<TransacaoService> logger,MyFinanceDbContext context){
 
             _context = context;
+            _logger = logger;
         }
 
         public List<TransacaoModel> ListarRegistros()
         {
+            
+            _logger.LogInformation(JsonSerializer.Serialize(new CustomLoggerEntry(){
+                IdRegistro=1,
+                Data=DateTime.Now,
+                Observacao="gravação atoa",
+                Operacao=EventType.Exclusao,
+                Tabela="Transacao"
+            }));
+
             var dbSet = _context.Transacao.Include(x => x.PlanoConta);
             var result = new List<TransacaoModel>();
 

@@ -1,12 +1,18 @@
+using System.Text.Json;
 using myfinance_web_dotnet;
 using myfinance_web_dotnet.Domain.Services;
 using myfinance_web_dotnet.Domain.Services.Interfaces;
+using myfinance_web_dotnet.Utils.Logger;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
 
+builder.Logging.AddCustomLoger();
+
+builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyFinanceDbContext>();
 builder.Services.AddScoped<IPlanoContaService,PlanoContaService>();
 builder.Services.AddScoped<ITransacaoService,TransacaoService>();
