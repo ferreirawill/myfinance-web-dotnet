@@ -60,7 +60,23 @@
 
     }
     function remove(id){
-        window.location.href = "/Transacao/Excluir/" + id
+        Swal.fire({
+            title: 'Confirme a Exclusão',
+            text: 'Atenção',
+            icon: 'question',
+            confirmButtonText: 'Excluir',
+            confirmButtonColor: '#007BFF',
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            cancelButtonColor: '#DC3545',
+
+        }).then(result =>{
+        if (result.isConfirmed){
+              window.location.href = "/Transacao/Excluir/" + id
+        }
+      })
+
+        
     }
 
     
