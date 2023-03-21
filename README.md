@@ -22,9 +22,9 @@ O **My Finance** é um projeto desenvolvido em Aspnet MVC que tem como objetivo 
 A arquitetura do projeto é baseada em MVC com a separação em duas camadas com suas responsabilidades distintas:
 
 - Aplicação
-    - Responsável por processar as entradas de usuários, efetuar a lógica da aplicação e tomar decisões sobre as saídas de informações.
+    - Camada contendo os componentes do MVC padrão, responsável por processar as entradas de usuários, efetuar a lógica da aplicação e tomar decisões sobre as saídas de informações.
 - Domínio
-    - Responsável por representar os conceitos do mundo real e as regras de domínio do problema. 
+    - Camada contendo os servios e entidades da aplicação, responsável por representar os conceitos do mundo real e as regras de domínio do problema. 
 
 
 
@@ -51,6 +51,10 @@ Com o container do SQL Server rodando, conecte-se ao banco e  execute as queries
 
 ## Detalhes da implementação da API de Logging do .NET
 
+A implementação de um provedor de logs personalizado do .NET seguiu a [documentação oficial](https://learn.microsoft.com/pt-br/dotnet/core/extensions/custom-logging-provider) disponível no site da Microsoft. Algumas definições da documentação foram adaptadas para a utilização nesse projeto.
+
+
+Inicialmente, a classe de configuração do log customizado foi definida com valores padrão para o EventId e o LogLevel. Isso porque essa aplicação será executada apenas em modo de debug e assim não há necessidade de buscar as configurações de log do ```app.settings.json```
 
 ``` c#
     public class CustomLoggerConfiguration
@@ -60,6 +64,19 @@ Com o container do SQL Server rodando, conecte-se ao banco e  execute as queries
         public LogLevel LogLevel {get;set;} = LogLevel.Information;
     }
 ```
+
+
+
+A utilização da interface ILogger necessita da implementação de 3 métodos. Os métodos e a forma que foram implementados são explicados no tópico abaixo:
+
+- ```BeginScope<TState>(TState)```
+    - Não era o objetivo trabalhar com escopos de log nesse projeto, por isso sempre é retornado ```null```
+- ```IsEnabled(LogLevel)```
+    - Neste caso o log sempre estará habilitado e por isso é sempre retornado ```true```
+- ```Log<TState>(LogLevel, EventId, TState, Exception, Func<TState,Exception,String>)```
+    - Executa a gravação de entradas de log no banco de dados e também imprime no console.
+
+Além desses métodos, foi criado um método ```Dispose()``` com o objetivo de fazer a liberação de recursos da instância do banco de dados que é criada para a escrita dos logs. A classe que implementa essa interface possui a seguinte característica:
 
 ``` c#
     public sealed class CustomLogger : ILogger
@@ -89,6 +106,16 @@ Com o container do SQL Server rodando, conecte-se ao banco e  execute as queries
 ```
 
 
+Para a criação de uma nova instância de `CustomLogger` é necessário criar uma clase que implemente o `ILoggerProvider`. Essa implementação requer a implementação dos seguintes métodos.
+
+* `CreateLogger(string categoryName)` 
+    - Responsável por criar e retornar um objeto ILogger. Neste projeto permitimos a criação de N logs com `categoryName` diferentes.
+* `Dispose()`
+    -  Método responsável por fazer a liberação de recursos do ILogger. Nessa implementação ao ser acionado será executada uma iteração no dicionário de loggers para que sejam liberados os recursos de cada uma das instâncias criadas
+    -  Vem da implementação do `IDisposable` por `ILoggerProvider`
+
+
+A classe que implementa o ILoggerProvider possui a característica do trecho de código abaixo:
 ``` c#
     public sealed class CustomLoggerProvider : ILoggerProvider
     {
@@ -115,10 +142,12 @@ Com o container do SQL Server rodando, conecte-se ao banco e  execute as queries
     }
 ```
 
+
+Para que fosse possível registrar um agente personalizado para a criação dos logs foi criada a classe estática `CustomLoggerExtensions` com o método `AddCustomLogger(this ILoggingBuilder builder)` que efetua a configuração do serviço de logs.
 ```c#
     public static class CustomLoggerExtensions
     {
-        public static ILoggingBuilder AddCustomLoger(this ILoggingBuilder builder)
+        public static ILoggingBuilder AddCustomLogger(this ILoggingBuilder builder)
         {
             builder.AddConfiguration();
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider,CustomLoggerProvider>());
@@ -133,6 +162,9 @@ Com o container do SQL Server rodando, conecte-se ao banco e  execute as queries
 ```
 
 
+Para registrar o agente personalizado foi utilizado o seguinte comando em `Program.cs`:
 ```c# 
-builder.Logging.AddCustomLoger();
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Logging.AddCustomLogger();
 ```
