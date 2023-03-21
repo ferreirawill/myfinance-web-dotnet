@@ -12,8 +12,6 @@ namespace myfinance_web_dotnet.Utils.Logger
         {
             builder.AddConfiguration();
             builder.Services.TryAddEnumerable(ServiceDescriptor.Singleton<ILoggerProvider,CustomLoggerProvider>());
-            //builder.Services.AddSingleton(new CustomLoggerConfiguration());
-            //builder.Services.AddSingleton<ILoggerProvider, CustomLoggerProvider>();
 
             LoggerProviderOptions.RegisterProviderOptions<CustomLoggerConfiguration,CustomLoggerProvider>(builder.Services);
             
